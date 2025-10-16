@@ -8,18 +8,20 @@ if (process.env.NODE_ENV !== 'production') {
   dotenv.config({ path: "backend/db/config.env" });
 }
 
-// Connect to database
-connect().catch(error => {
-  console.error("Failed to connect to database:", error.message);
-  process.exit(1);
-});
-
 // Configure Cloudinary
 cloudinary.config({
   cloud_name: process.env.CLOUDNAME,
   api_key: process.env.APIKEY,
   api_secret: process.env.APISECRET,
 });
+
+// Connect to database (only for non-serverless environments)
+if (process.env.NODE_ENV !== 'production') {
+  connect().catch(error => {
+    console.error("Failed to connect to database:", error.message);
+    process.exit(1);
+  });
+}
 
 const PORT = process.env.PORT || 4000;
 
