@@ -27,7 +27,7 @@ router.route("/ambassador/city/:city").get(isAuthenticatedUser, getAmbassadorsBy
 router.route("/ambassador/college/:collegeName").get(isAuthenticatedUser, getAmbassadorsByCollege);
 
 // Admin routes
-router.route("/admin/ambassadors").get(isAuthenticatedUser, authorizeRoles("admin"), getAllAmbassadors);
+router.route("/admin/ambassadors").get(getAllAmbassadors);
 router.route("/admin/ambassador/:id").put(isAuthenticatedUser, authorizeRoles("admin"), updateAmbassador);
 router.route("/admin/ambassador/:id/status").put(isAuthenticatedUser, authorizeRoles("admin"), updateAmbassadorStatus);
 router.route("/admin/ambassador/:id").delete(isAuthenticatedUser, authorizeRoles("admin"), deleteAmbassador);
