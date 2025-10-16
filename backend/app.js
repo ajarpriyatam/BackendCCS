@@ -12,6 +12,18 @@ app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use(cookieParser());
 
+// Database connection middleware
+app.use((req, res, next) => {
+  const mongoose = require('mongoose');
+  if (mongoose.connection.readyState !== 1) {
+    return res.status(503).json({
+      error: 'Database not connected',
+      message: 'Please try again later'
+    });
+  }
+  next();
+});
+
 const product = require("./routes/ProdectRoute");
 const user = require("./routes/UserRoute");
 const order = require("./routes/OrderRoute");
