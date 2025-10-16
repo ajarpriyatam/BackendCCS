@@ -39,29 +39,29 @@ exports.registerAmbassador = catchAsyncErrors(async (req, res, next) => {
   });
 
   // Send welcome email to ambassador
-  try {
-    const ambassadorDetails = {
-      name,
-      emailId,
-      phoneNumber,
-      collegeName,
-      collegeCity,
-      courseYear,
-      ambassadorId: ambassador.ambassadorId
-    };
+  // try {
+  //   const ambassadorDetails = {
+  //     name,
+  //     emailId,
+  //     phoneNumber,
+  //     collegeName,
+  //     collegeCity,
+  //     courseYear,
+  //     ambassadorId: ambassador.ambassadorId
+  //   };
     
-    const welcomeEmailTemplate = generateAmbassadorWelcomeEmail(ambassadorDetails);
+  //   const welcomeEmailTemplate = generateAmbassadorWelcomeEmail(ambassadorDetails);
     
-    await sendEmail({
-      email: emailId,
-      subject: welcomeEmailTemplate.subject,
-      message: welcomeEmailTemplate.text,
-      html: welcomeEmailTemplate.html
-    });
-  } catch (emailError) {
-    console.error("Failed to send welcome email:", emailError);
-    // Don't fail registration if email fails
-  }
+  //   await sendEmail({
+  //     email: emailId,
+  //     subject: welcomeEmailTemplate.subject,
+  //     message: welcomeEmailTemplate.text,
+  //     html: welcomeEmailTemplate.html
+  //   });
+  // } catch (emailError) {
+  //   console.error("Failed to send welcome email:", emailError);
+  //   // Don't fail registration if email fails
+  // }
 
   // Send notification email to company
   try {

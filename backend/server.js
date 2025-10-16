@@ -10,7 +10,8 @@ if (process.env.NODE_ENV !== 'production') {
 
 // Connect to database
 connect().catch(error => {
-  // Database connection error handled silently
+  console.error("Failed to connect to database:", error.message);
+  process.exit(1);
 });
 
 // Configure Cloudinary
