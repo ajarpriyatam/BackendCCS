@@ -11,7 +11,5 @@
       "src": "/(.*)",
       "dest": "backend/server.js"
     }
-  ],
-  "installCommand": "npm install --prefix .",
-  "buildCommand": "echo 'Build completed'"
+  ]
 }
