@@ -8,10 +8,28 @@ if (process.env.NODE_ENV !== 'production') {
   dotenv.config({ path: "backend/db/config.env" });
 }
 
-// Connect to database
-connect().catch(error => {
-  // Database connection error handled silently
-});
+// Connect to database with proper error handling
+const initializeDB = async () => {
+  try {
+    console.log("🔗 Attempting to connect to MongoDB...");
+    console.log("📍 DB_URI exists:", !!process.env.DB_URI);
+    
+    if (!process.env.DB_URI) {
+      console.error("❌ DB_URI environment variable is not set!");
+      return false;
+    }
+    
+    await connect();
+    console.log("✅ Database connected successfully");
+    return true;
+  } catch (error) {
+    console.error("❌ Database connection failed:", error.message);
+    return false;
+  }
+};
+
+// Initialize database connection
+initializeDB();
 
 // Configure Cloudinary
 cloudinary.config({

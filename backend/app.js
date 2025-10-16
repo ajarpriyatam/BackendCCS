@@ -13,13 +13,23 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use(cookieParser());
 
 // Database connection middleware
-app.use((req, res, next) => {
+app.use(async (req, res, next) => {
   const mongoose = require('mongoose');
+  const connect = require('./db/connect.js');
+  
+  // If not connected, try to connect
   if (mongoose.connection.readyState !== 1) {
-    return res.status(503).json({
-      error: 'Database not connected',
-      message: 'Please try again later'
-    });
+    try {
+      console.log("🔄 Attempting to reconnect to database...");
+      await connect();
+      console.log("✅ Database reconnected successfully");
+    } catch (error) {
+      console.error("❌ Database reconnection failed:", error.message);
+      return res.status(503).json({
+        error: 'Database connection failed',
+        message: 'Please check your database configuration'
+      });
+    }
   }
   next();
 });
